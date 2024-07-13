@@ -1,6 +1,6 @@
 import icons from "url:../../../src/img/icons.svg";
 import { Fraction } from "fractional";
-console.log(Fraction);
+import View from "./View.js";
 class recipeView {
   _parentElement = document.querySelector(".recipe");
   _data;
