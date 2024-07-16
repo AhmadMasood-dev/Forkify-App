@@ -4,11 +4,11 @@ import { getJSON } from "./helper.js";
 import { RES_PER_PAGE } from "./config.js";
 export const state = {
   recipe: {},
-  search:{
-    query:'',
-    results:[],
-    page:1,
-    resultsPerPage:RES_PER_PAGE,
+  search: {
+    query: "",
+    results: [],
+    page: 1,
+    resultsPerPage: RES_PER_PAGE,
   },
 };
 
@@ -34,30 +34,36 @@ export const loadRecipe = async function (id) {
     throw err;
   }
 };
-export const loadSearchResults=async function(query){
+export const loadSearchResults = async function (query) {
   try {
-    state.search.query=query;
-    const data=await getJSON(`${API_URL}?search=${query}`)
-    console.log(data)
-  state.search.results=  data.data.recipes.map(rec=>{
-      return{
+    state.search.query = query;
+    const data = await getJSON(`${API_URL}?search=${query}`);
+    console.log(data);
+    state.search.results = data.data.recipes.map((rec) => {
+      return {
         id: rec.id,
-      title: rec.title,
-      publisher: rec.publisher,
-      image: rec.image_url,
-      }
-    })
-    
+        title: rec.title,
+        publisher: rec.publisher,
+        image: rec.image_url,
+      };
+    });
   } catch (err) {
     console.error(`${err} 💥💥💥💥`);
     throw err;
   }
-  
-}
-export const getSearchResultsPage=function(page=state.search.page){
-  state.search.page=page
+};
+export const getSearchResultsPage = function (page = state.search.page) {
+  state.search.page = page;
 
-  const start=(page-1)*state.search.resultsPerPage;
-  const end=page*state.search.resultsPerPage;
-  return state.search.results.slice(start,end)
-}
+  const start = (page - 1) * state.search.resultsPerPage;
+  const end = page * state.search.resultsPerPage;
+  return state.search.results.slice(start, end);
+};
+export const updateServings = function (newServings) {
+  state.recipe.ingredients.forEach((ing) => {
+    ing.quality = (ing.quality * newServings) / state.recipe.servings;
+
+  });
+  
+  state.recipe.servings=newServings
+};
