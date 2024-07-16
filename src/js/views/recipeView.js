@@ -5,7 +5,6 @@ class recipeView extends View {
   _parentElement = document.querySelector(".recipe");
   _errorMessage = "No recipes found for your query. Please try again!";
   _message = "";
- 
 
   addHandlerRender(handler) {
     ["hashchange", "load"].forEach((ev) =>
