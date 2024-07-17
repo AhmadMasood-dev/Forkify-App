@@ -61,9 +61,9 @@ export const getSearchResultsPage = function (page = state.search.page) {
 };
 export const updateServings = function (newServings) {
   state.recipe.ingredients.forEach((ing) => {
-    ing.quality = (ing.quality * newServings) / state.recipe.servings;
-
+    ing.quantity = (ing.quantity * newServings) / state.recipe.servings;
+    // newQt = oldQt * newServings / oldServings // 2 * 8 / 4 = 4
   });
-  
-  state.recipe.servings=newServings
+
+  state.recipe.servings = newServings;
 };
