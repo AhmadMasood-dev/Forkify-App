@@ -16,23 +16,23 @@ export default class View {
 
     const newDOM = document.createRange().createContextualFragment(newMarkup);
     const newElements = Array.from(newDOM.querySelectorAll("*"));
+    const curElements = Array.from(this._parentElement.querySelectorAll("*"));
 
-    const curElemets = Array.from(this._parentElement.querySelectorAll("*"));
     newElements.forEach((newEl, i) => {
-      const curEl = curElemets[i];
-      //update change text
+      const curEl = curElements[i];
+
       if (
         !newEl.isEqualNode(curEl) &&
-        newEl.firstChild.nodeValue.trim() !== ""
+        newEl.firstChild?.nodeValue.trim() !== ""
       ) {
         curEl.textContent = newEl.textContent;
       }
-      //update change attribute
-      if (!newEl.isEqualNode(curEl)) {
+
+      // Updates changed ATTRIBUTES
+      if (!newEl.isEqualNode(curEl))
         Array.from(newEl.attributes).forEach((attr) =>
           curEl.setAttribute(attr.name, attr.value)
         );
-      }
     });
   }
   _clear() {

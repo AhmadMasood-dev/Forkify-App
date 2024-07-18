@@ -19,6 +19,15 @@ class recipeView extends View {
       if (+updateTo > 0) handler(+updateTo);
     });
   }
+
+  addHandlerAddBookMark = function (handler) {
+    this._parentElement.addEventListener("click", function (e) {
+      const btn = e.target.closest(".btn--bookmark");
+      if (!btn) return;
+      handler();
+    });
+  };
+
   _generateMarkup() {
     return `
       <figure class="recipe__fig">
